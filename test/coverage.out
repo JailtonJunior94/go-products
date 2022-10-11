@@ -1,0 +1,17 @@
+mode: set
+github.com/jailtonjunior94/go-products/internal/entity/product.go:25.59,34.16 3 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:38.2,38.21 1 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:34.16,36.3 1 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:41.36,42.25 1 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:46.2,46.57 1 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:50.2,50.18 1 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:54.2,54.18 1 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:58.2,58.12 1 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:42.25,44.3 1 0
+github.com/jailtonjunior94/go-products/internal/entity/product.go:46.57,48.3 1 0
+github.com/jailtonjunior94/go-products/internal/entity/product.go:50.18,52.3 1 1
+github.com/jailtonjunior94/go-products/internal/entity/product.go:54.18,56.3 1 1
+github.com/jailtonjunior94/go-products/internal/entity/user.go:16.59,18.16 2 1
+github.com/jailtonjunior94/go-products/internal/entity/user.go:22.2,27.8 1 1
+github.com/jailtonjunior94/go-products/internal/entity/user.go:18.16,20.3 1 0
+github.com/jailtonjunior94/go-products/internal/entity/user.go:30.55,33.2 2 1
