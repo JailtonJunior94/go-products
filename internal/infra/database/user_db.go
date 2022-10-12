@@ -2,6 +2,7 @@ package database
 
 import (
 	"github.com/jailtonjunior94/go-products/internal/entity"
+
 	"gorm.io/gorm"
 )
 

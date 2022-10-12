@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/jailtonjunior94/go-products/internal/entity"
+
 	"github.com/stretchr/testify/assert"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
