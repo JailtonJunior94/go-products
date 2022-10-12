@@ -15,3 +15,8 @@ github.com/jailtonjunior94/go-products/internal/entity/user.go:16.59,18.16 2 1
 github.com/jailtonjunior94/go-products/internal/entity/user.go:22.2,27.8 1 1
 github.com/jailtonjunior94/go-products/internal/entity/user.go:18.16,20.3 1 0
 github.com/jailtonjunior94/go-products/internal/entity/user.go:30.55,33.2 2 1
+github.com/jailtonjunior94/go-products/internal/infra/database/user_db.go:12.33,14.2 1 1
+github.com/jailtonjunior94/go-products/internal/infra/database/user_db.go:16.48,18.2 1 1
+github.com/jailtonjunior94/go-products/internal/infra/database/user_db.go:20.64,22.74 2 1
+github.com/jailtonjunior94/go-products/internal/infra/database/user_db.go:25.2,25.19 1 1
+github.com/jailtonjunior94/go-products/internal/infra/database/user_db.go:22.74,24.3 1 0
