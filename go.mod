@@ -3,6 +3,7 @@ module github.com/jailtonjunior94/go-products
 go 1.19
 
 require (
+	github.com/go-chi/chi/v5 v5.0.7
 	github.com/go-chi/jwtauth v1.2.0
 	github.com/google/uuid v1.1.2
 	github.com/spf13/viper v1.13.0
