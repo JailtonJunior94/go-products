@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/jailtonjunior94/go-products/internal/dto"
 	"github.com/jailtonjunior94/go-products/internal/entity"
@@ -17,10 +18,47 @@ type UserHandler struct {
 	JWTExperiesIn int
 }
 
-func NewUserHandler(db database.UserInterface) *UserHandler {
+func NewUserHandler(db database.UserInterface, jwt *jwtauth.JWTAuth, jwtExperiesIn int) *UserHandler {
 	return &UserHandler{
-		UserDB: db,
+		UserDB:        db,
+		JWT:           jwt,
+		JWTExperiesIn: jwtExperiesIn,
 	}
+}
+
+func (h *UserHandler) GetJWT(w http.ResponseWriter, r *http.Request) {
+	var user dto.GetJWTInput
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	u, err := h.UserDB.FindByEmail(user.Email)
+	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	if !u.ValidatePassword(user.Password) {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	_, tokenString, _ := h.JWT.Encode(map[string]interface{}{
+		"sub": u.ID.String(),
+		"exp": time.Now().Add(time.Second * time.Duration(h.JWTExperiesIn)).Unix(),
+	})
+
+	accessToken := struct {
+		AccessToken string `json:"access_token"`
+	}{
+		AccessToken: tokenString,
+	}
+
+	w.Header().Set("Contenty-Type", "application/json")
+	json.NewEncoder(w).Encode(accessToken)
+	w.WriteHeader(http.StatusOK)
 }
 
 func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {

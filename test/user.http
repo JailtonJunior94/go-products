@@ -6,3 +6,12 @@ Content-Type: application/json
     "email": "jailton.junior94@outlook.com",
     "password": "123456"
 }
+
+###
+POST http://localhost:8000/token HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "jailton.junior94@outlook.com",
+    "password": "123456"
+}
