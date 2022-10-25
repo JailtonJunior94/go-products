@@ -5,16 +5,34 @@ import (
 	"net/http"
 
 	"github.com/jailtonjunior94/go-products/configs"
+	_ "github.com/jailtonjunior94/go-products/docs"
 	"github.com/jailtonjunior94/go-products/internal/entity"
 	"github.com/jailtonjunior94/go-products/internal/infra/database"
 	"github.com/jailtonjunior94/go-products/internal/infra/webserver/handlers"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth"
+	swagger "github.com/swaggo/http-swagger"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
+// @title          Go Products API
+// @version        1.0
+// @description    Product API with authentication
+// @termsOfService http://swagger.io/terms
+
+// @contact.name  Jailton Junior
+// @contact.url   http://jailton.junior.net
+// @contact.email jailton.junior94@outlook.com
+
+// @license.name Jailton Junior License
+// @license.url  http://jailton.junior.net
+
+// @BasePath                   /
+// @securityDefinitions.apiKey ApiKeyAuth
+// @in                         header
+// @name                       Authorization
 func main() {
 	configs, err := configs.LoadConfig(".")
 	if err != nil {
@@ -49,6 +67,8 @@ func main() {
 		r.Put("/{id}", productHandler.UpdateProduct)
 		r.Delete("/{id}", productHandler.DeleteProduct)
 	})
+
+	r.Get("/docs/*", swagger.Handler(swagger.URL("http://localhost:8000/docs/doc.json")))
 
 	http.ListenAndServe(":8000", r)
 }
