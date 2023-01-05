@@ -1,9 +1,13 @@
 package main
 
 import (
+	"errors"
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/jailtonjunior94/go-products/configs"
 	_ "github.com/jailtonjunior94/go-products/docs"
 	"github.com/jailtonjunior94/go-products/internal/entity"
@@ -58,7 +62,7 @@ func main() {
 	r.Post("/users", userHandler.CreateUser)
 
 	r.Route("/products", func(r chi.Router) {
-		r.Use(jwtauth.Verifier(configs.TokenAuthKey))
+		r.Use(Authorization)
 		r.Use(jwtauth.Authenticator)
 
 		r.Post("/", productHandler.CreateProduct)
@@ -78,4 +82,46 @@ func LogRequest(next http.Handler) http.Handler {
 		log.Printf("[REQUEST] %s %s", r.Method, r.URL.Path)
 		next.ServeHTTP(w, r)
 	})
+}
+
+func Authorization(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		secretKey := "-----BEGIN CERTIFICATE-----\n" +
+			"" +
+			"\n-----END CERTIFICATE-----"
+
+		key, err := jwt.ParseRSAPublicKeyFromPEM([]byte(secretKey))
+		if err != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		tokenReq := tokenFromHeader(r)
+		token, err := jwt.Parse(tokenReq, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
+				return nil, errors.New("Token inválido")
+			}
+			return key, nil
+		})
+
+		if err != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			fmt.Println("token is valid")
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
+
+func tokenFromHeader(r *http.Request) string {
+	// Get token from authorization header.
+	bearer := r.Header.Get("Authorization")
+	if len(bearer) > 7 && strings.ToUpper(bearer[0:6]) == "BEARER" {
+		return bearer[7:]
+	}
+	return ""
 }
